@@ -1,0 +1,7 @@
+{
+  "htmlWhitespaceSensitivity": "ignore",
+  "vueIndentScriptAndStyle": false,
+  "singleQuote": false,
+  "semi": true,
+  "trailingComma": "none"
+}

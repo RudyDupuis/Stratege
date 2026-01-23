@@ -1,0 +1,42 @@
+{
+  "name": "stratege",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "ci": "nuxt prepare",
+    "fix": "prettier --write . && eslint . --fix && nuxi typecheck",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:migrate:add": "prisma migrate dev",
+    "db:reset": "prisma migrate reset --force",
+    "db:studio": "prisma studio",
+    "analyse:check": "eslint",
+    "format:check": "prettier --check .",
+    "typescript:check": "nuxi typecheck",
+    "update": "npx npm-check-updates -u && npm install"
+  },
+  "dependencies": {
+    "@nuxt/eslint": "^1.13.0",
+    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/client": "^7.3.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "nuxt": "^4.3.0",
+    "nuxt-auth-utils": "^0.5.27",
+    "nuxt-gtag": "^4.1.0",
+    "pg": "^8.17.2",
+    "tailwindcss": "^4.1.18",
+    "vue": "^3.5.27",
+    "vue-router": "^4.6.4",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.16.0",
+    "dotenv": "^17.2.3",
+    "prettier": "^3.8.1",
+    "prisma": "^7.3.0",
+    "tsx": "^4.21.0",
+    "vue-tsc": "^3.2.3"
+  }
+}

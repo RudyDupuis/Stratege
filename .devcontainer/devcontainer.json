@@ -1,0 +1,9 @@
+{
+  "name": "Stratège Dev Container",
+  "dockerComposeFile": ["docker-compose.dev.yml"],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "overrideCommand": true,
+  "postCreateCommand": "npm install",
+  "postAttachCommand": "npm run db:generate && npm run db:migrate && npm run dev"
+}

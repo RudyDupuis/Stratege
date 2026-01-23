@@ -1,0 +1,54 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: secret
+          POSTGRES_DB: database
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Prepare Nuxt
+        run: npm run ci
+
+      - name: Generate Prisma Client
+        run: npm run db:generate
+
+      - name: Code Analysis
+        run: npm run analyse:check
+
+      - name: Code Formatting
+        run: npm run format:check
+
+      - name: Code Type Checking
+        run: npm run typescript:check
+
+      - name: Build Project
+        run: npm run build

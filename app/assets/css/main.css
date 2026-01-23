@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* @font-face {
+  font-family: "Kodchasan-Regular";
+  src: url(../fonts/Kodchasan-Regular.ttf);
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kodchasan-Medium";
+  src: url(../fonts/Kodchasan-Medium.ttf);
+  font-display: swap;
+}
+@font-face {
+  font-family: "Kodchasan-Bold";
+  src: url(../fonts/Kodchasan-Bold.ttf);
+  font-display: swap;
+} */
+
+@theme {
+}
+
+@layer base {
+}
+
+@layer utilities {
+}
+
+@layer components {
+}
