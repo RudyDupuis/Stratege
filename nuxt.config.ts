@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
-  modules: ["@nuxt/eslint", "nuxt-gtag", "nuxt-auth-utils"],
+  modules: ["@nuxt/eslint", "nuxt-gtag", "nuxt-auth-utils", "@pinia/nuxt"],
   vite: {
     plugins: [tailwindcss()]
   },

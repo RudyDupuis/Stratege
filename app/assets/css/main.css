@@ -1,29 +1,108 @@
 @import "tailwindcss";
 
-/* @font-face {
-  font-family: "Kodchasan-Regular";
-  src: url(../fonts/Kodchasan-Regular.ttf);
+@font-face {
+  font-family: "Kalam-Bold";
+  src: url("../fonts/Kalam-Bold.ttf");
   font-display: swap;
 }
 @font-face {
-  font-family: "Kodchasan-Medium";
-  src: url(../fonts/Kodchasan-Medium.ttf);
+  font-family: "Kalam-Regular";
+  src: url("../fonts/Kalam-Regular.ttf");
   font-display: swap;
 }
 @font-face {
-  font-family: "Kodchasan-Bold";
-  src: url(../fonts/Kodchasan-Bold.ttf);
+  font-family: "Lato-Bold";
+  src: url("../fonts/Lato-Bold.ttf");
   font-display: swap;
-} */
+}
+@font-face {
+  font-family: "Lato-Regular";
+  src: url("../fonts/Lato-Regular.ttf");
+  font-display: swap;
+}
 
 @theme {
+  --color-dark: #1e0802;
+  --color-light: #dfcaa1;
+  --color-dark-light: #caaf79;
+
+  --color-error: #ef4444;
+  --color-success: #10b981;
+  --color-info: #669bbc;
+
+  --color-moving: #b9b6a9;
+  --color-killing: #ef4444;
+  --color-pulling: #a593b9;
+  --color-pushing: #93b9b7;
+  --color-player1: #d17c3f;
+  --color-player2: #7f995a;
+
+  --font-primary-regular: Lato-Regular, Arial;
+  --font-primary-bold: Lato-Bold, Arial;
+  --font-secondary-regular: Kalam-Regular, Arial;
+  --font-secondary-bold: Kalam-Bold, Arial;
 }
 
 @layer base {
+  body {
+    @apply bg-light font-primary-regular text-dark select-none;
+  }
+
+  main {
+    @apply min-h-screen flex flex-col items-center justify-center mx-10;
+  }
 }
 
 @layer utilities {
+  /*** Text ***/
+  .very-large-title {
+    @apply font-secondary-bold text-6xl text-center;
+  }
+  .large-title {
+    @apply font-secondary-bold text-5xl text-center;
+  }
+  .medium-title {
+    @apply font-secondary-bold text-3xl text-center;
+  }
+  .small-title {
+    @apply font-secondary-bold text-xl text-center;
+  }
+
+  strong {
+    @apply font-primary-bold font-normal;
+  }
 }
 
 @layer components {
+  /*** Buttons ***/
+  .button,
+  .danger-button {
+    @apply text-center text-lg font-primary-bold border-4 rounded-lg md:w-96 w-full py-2 disabled:opacity-40;
+  }
+
+  .button {
+    @apply border-dark;
+  }
+  .danger-button {
+    @apply border-error;
+  }
+
+  .small-button {
+    @apply w-64;
+  }
+
+  .button:hover,
+  .danger-button:hover,
+  .small-button:hover,
+  .button:active,
+  .small-button:active,
+  a:active,
+  a:hover {
+    @apply opacity-40;
+  }
+
+  /*** Inputs ***/
+  .input {
+    @apply text-lg font-primary-regular border-4 border-dark-light bg-light rounded-lg md:w-96 w-full py-1 px-4 hover:border-dark focus:outline-none;
+  }
 }
