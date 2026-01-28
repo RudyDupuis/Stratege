@@ -1,5 +1,3 @@
-import { defineStore } from "pinia";
-
 export const useSoundStore = defineStore("sound", () => {
   const sounds = ref<Record<string, HTMLAudioElement>>({});
   const isMuted = ref<boolean>(false);

@@ -1,4 +1,4 @@
-import type User from "../../user/entities/User";
+import type { User } from "#auth-utils";
 import type EndGameInformationDto from "./EndGameInformationDto";
 import type { PlayerRole } from "./PlayerRoleEnum";
 

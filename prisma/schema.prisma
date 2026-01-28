@@ -12,3 +12,10 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model User {
+  keycloakId String @id
+  pseudo     String
+  avatarId   Int    @default(1)
+  eloScore   Int    @default(1000)
+}

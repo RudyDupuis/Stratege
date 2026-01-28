@@ -75,9 +75,12 @@
 
 @layer components {
   /*** Buttons ***/
+  button {
+    @apply cursor-pointer;
+  }
   .button,
   .danger-button {
-    @apply text-center text-lg font-primary-bold border-4 rounded-lg md:w-96 w-full py-2 disabled:opacity-40;
+    @apply cursor-pointer text-center text-lg font-primary-bold border-4 rounded-lg md:w-96 w-full py-2 disabled:opacity-40;
   }
 
   .button {

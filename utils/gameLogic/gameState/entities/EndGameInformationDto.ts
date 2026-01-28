@@ -1,13 +1,13 @@
+import type { User } from "#auth-utils";
 import type { PlayerRole } from "./PlayerRoleEnum";
-import type UserDto from "../../user/entities/UserDto";
 
 export default interface EndGameInformationDto {
   winner: {
     playerRole: PlayerRole;
-    user?: UserDto;
+    user?: User;
   };
   loser: {
     playerRole: PlayerRole;
-    user?: UserDto;
+    user?: User;
   };
 }

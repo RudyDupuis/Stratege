@@ -35,7 +35,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stratege.rule=Host(`stratege.fr`)"
+      - "traefik.http.routers.stratege.rule=Host(`stratege.rd-tech.fr`)"
       - "traefik.http.routers.stratege.entrypoints=websecure"
       - "traefik.http.routers.stratege.tls.certresolver=letsencrypt"
       - "traefik.http.services.stratege.loadbalancer.server.port=3000"
