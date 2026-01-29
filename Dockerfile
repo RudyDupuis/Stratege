@@ -1,12 +1,35 @@
-FROM node:25-alpine
+FROM node:25-alpine AS builder
 
 WORKDIR /app
 
-RUN apk update
-
 COPY . .
-RUN npm install
-RUN npm run db:generate
-RUN npm run build
 
-CMD ["sh", "-c", "npm run db:migrate && node .output/server/index.mjs"]
+RUN npm ci && npm run db:generate && npm run build
+
+
+
+FROM node:25-alpine AS app-runner
+
+WORKDIR /app
+
+COPY --from=builder /app/.output ./.output
+
+RUN addgroup -S app && adduser -S app -G app
+
+USER app
+
+ENV NODE_ENV=production
+
+EXPOSE 3000
+
+CMD ["node", ".output/server/index.mjs"]
+
+
+
+FROM node:25-alpine AS migrate-runner
+
+WORKDIR /app
+
+COPY --from=builder /app ./
+
+CMD ["npm", "run", "db:migrate"]
