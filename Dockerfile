@@ -1,6 +1,10 @@
-FROM node:25-alpine AS builder
+FROM node:22-slim AS builder
 
 WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y python3 make g++ && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY . .
 
@@ -8,13 +12,13 @@ RUN npm ci && npm run db:generate && npm run build
 
 
 
-FROM node:25-alpine AS app-runner
+FROM node:22-slim AS app-runner
 
 WORKDIR /app
 
 COPY --from=builder /app/.output ./.output
 
-RUN addgroup -S app && adduser -S app -G app
+RUN addgroup --system app && adduser --system --ingroup app app
 
 USER app
 
@@ -26,7 +30,7 @@ CMD ["node", ".output/server/index.mjs"]
 
 
 
-FROM node:25-alpine AS migrate-runner
+FROM node:22-slim AS migrate-runner
 
 WORKDIR /app
 

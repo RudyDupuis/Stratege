@@ -1,0 +1,129 @@
+<script setup lang="ts">
+const gameState = requiredInject<Ref<GameState>>("gameState");
+const playerRole = requiredInject<Ref<PlayerRole>>("playerRole");
+const endGameInformation =
+  requiredInject<Ref<EndGameInformation | undefined>>("endGameInformation");
+
+const targetPawn = ref<Pawn | undefined>(undefined);
+const openPawnControls = ref<boolean>(false);
+const action = ref<Action | undefined>(undefined);
+watch(action, () => {
+  if (isDefined(action.value)) {
+    openPawnControls.value = false;
+  }
+});
+
+const positionsAvailableForActions = ref<PositionsAvailableForActions>({
+  positionsAvailableForMoving: [],
+  positionsAvailableForKilling: [],
+  positionsAvailableForPushing: [],
+  positionsAvailableForPulling: []
+});
+
+function selectPawn(pawn: Pawn) {
+  if (
+    pawn.owner !== playerRole.value ||
+    !isPlayerTurn.value ||
+    isDefined(endGameInformation.value)
+  ) {
+    return;
+  }
+  resetTarget();
+  targetPawn.value = pawn;
+  openPawnControls.value = true;
+
+  positionsAvailableForActions.value =
+    gameState.value.determineAvailablePositionsForActions(
+      targetPawn.value,
+      playerRole.value
+    );
+}
+
+function resetTarget() {
+  targetPawn.value = undefined;
+  action.value = undefined;
+  positionsAvailableForActions.value = {
+    positionsAvailableForMoving: [],
+    positionsAvailableForKilling: [],
+    positionsAvailableForPushing: [],
+    positionsAvailableForPulling: []
+  };
+}
+const isPlayerTurn = computed(() => {
+  return (
+    gameState.value.determinePlayerBasedOnTurn() === playerRole.value &&
+    isUndefined(endGameInformation.value)
+  );
+});
+provide("isPlayerTurn", isPlayerTurn);
+
+watch(
+  isPlayerTurn,
+  () => {
+    if (isPlayerTurn.value) {
+      useSoundStore().playSound("player_turn");
+    }
+  },
+  { immediate: true }
+);
+</script>
+
+<template>
+  <section
+    class="flex flex-col xl:flex-row justify-center w-full items-center mt-16 md:mt-0"
+  >
+    <section class="flex flex-col justify-center items-center py-10 xl:py-0">
+      <BoardInformations />
+      <div class="p-6 rounded-xl bg-dark-light">
+        <div
+          class="grid grid-cols-8 grid-rows-8 border border-dark"
+          :style="{ width: 'min(80vw, 80vh)', height: 'min(80vw, 80vh)' }"
+          :class="{ 'rotate-180': playerRole === PlayerRole.Player2 }"
+        >
+          <div
+            v-for="(row, rowIndex) in gameState.board"
+            :key="rowIndex"
+            class="contents"
+          >
+            <div
+              v-for="(pawn, colIndex) in row"
+              :key="colIndex"
+              class="flex justify-center items-center border border-dark relative"
+            >
+              <PawnActions
+                v-if="
+                  isPlayerTurn && isDefined(targetPawn) && isDefined(action)
+                "
+                :target-pawn="targetPawn"
+                :action="action"
+                :positions-available-for-actions="positionsAvailableForActions"
+                :row-index="rowIndex"
+                :col-index="colIndex"
+                @do-action="resetTarget()"
+              />
+              <PawnControls
+                v-if="openPawnControls && isPlayerTurn && isDefined(targetPawn)"
+                v-model="action"
+                :target-pawn="targetPawn"
+                :positions-available-for-actions="positionsAvailableForActions"
+                :row-index="rowIndex"
+                :col-index="colIndex"
+                @rotate-pawn="resetTarget()"
+                @unselect-pawn="resetTarget()"
+              />
+              <PawnDisplayHandler
+                v-if="isNotNull(pawn)"
+                :key="pawn.id"
+                :pawn="pawn"
+                :target-pawn="targetPawn"
+                @mousedown="selectPawn(pawn)"
+                @touchstart.prevent="selectPawn(pawn)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <GameInformationsHandler @pass-turn="resetTarget()" />
+  </section>
+</template>

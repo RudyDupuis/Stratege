@@ -4,7 +4,7 @@ const soundStore = useSoundStore();
 const isMuted = storeToRefs(soundStore).isMuted;
 
 const isInGame = computed(() => {
-  return route.path.startsWith("/jouer") && route.query.roomId !== undefined;
+  return route.path.startsWith("/play") && route.query.roomId !== undefined;
 });
 
 onMounted(() => {
