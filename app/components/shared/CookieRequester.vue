@@ -1,33 +1,28 @@
 <script setup lang="ts">
-declare global {
-  interface Window {
-    gtag: (...args: unknown[]) => void;
-  }
-}
+const { initialize } = useGtag();
 
 const hasConsent = ref<boolean>(false);
-const isDefinedConsent = ref<boolean>(false);
+const askForConsent = ref<boolean>(false);
 
-const enableAnalytics = () => {
+function enableAnalytics() {
   if (!hasConsent.value) return;
-  window.gtag("js", new Date());
-  window.gtag("config", "G-NQXTE21RG7", { anonymize_ip: true });
-};
+  initialize();
+}
 
 const acceptCookies = () => {
   localStorage.setItem("cookieConsent", "accepted");
   enableAnalytics();
-  isDefinedConsent.value = true;
+  askForConsent.value = false;
 };
 
 const refuseCookies = () => {
   localStorage.setItem("cookieConsent", "refused");
-  isDefinedConsent.value = true;
+  askForConsent.value = false;
 };
 
 onMounted(() => {
-  isDefinedConsent.value = isNotNull(localStorage.getItem("cookieConsent"));
-  if (isDefinedConsent.value) {
+  askForConsent.value = isNull(localStorage.getItem("cookieConsent"));
+  if (!askForConsent.value) {
     hasConsent.value = localStorage.getItem("cookieConsent") === "accepted";
   }
   enableAnalytics();
@@ -36,7 +31,7 @@ onMounted(() => {
 
 <template>
   <div
-    v-if="!isDefinedConsent"
+    v-if="askForConsent"
     class="font-primary-bold fixed bottom-4 right-4 bg-info p-4 rounded shadow-lg mx-6"
   >
     Des cookies sont utilisés par Google Analitycs pour mesurer le trafic.

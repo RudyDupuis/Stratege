@@ -26,12 +26,39 @@ export default defineNuxtConfig({
       websocket: true
     }
   },
+  gtag: {
+    initMode: "manual",
+    id: "G-NQXTE21RG7"
+  },
   app: {
     head: {
       script: [
         {
           src: "https://kit.fontawesome.com/49aa64a243.js",
           crossorigin: "anonymous"
+        }
+      ],
+      meta: [
+        {
+          property: "og:title",
+          content: "Stratège - Jeu de Plateau en Ligne"
+        },
+        {
+          property: "og:description",
+          content:
+            "Jouez à Stratège en ligne ! Utilisez vos stratégies pour éliminer les pions adverses et remporter la victoire."
+        },
+        {
+          property: "og:url",
+          content: "https://stratege.rd-tech.fr"
+        },
+        {
+          property: "og:type",
+          content: "website"
+        },
+        {
+          property: "og:site_name",
+          content: "Stratège"
         }
       ]
     }
