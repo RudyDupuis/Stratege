@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   modules: ["@nuxt/eslint", "nuxt-gtag", "nuxt-auth-utils", "@pinia/nuxt"],
   vite: {
+    // @ts-expect-error vite type mismatch between @nuxt/schema and @tailwindcss/vite https://github.com/tailwindlabs/tailwindcss/discussions/19655 TODO remove later
     plugins: [tailwindcss()]
   },
   components: [
