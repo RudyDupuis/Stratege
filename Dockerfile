@@ -7,7 +7,8 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY . .
-
+RUN npm --version
+RUN npm ci || (cat /root/.npm/_logs/* && false)
 RUN npm ci && npm run db:generate && npm run build
 
 
