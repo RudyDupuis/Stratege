@@ -1,15 +1,8 @@
 import * as tf from "@tensorflow/tfjs-node";
-import path from "path";
 
 export async function loadModel(name: string) {
-  const modelPath = path.join(
-    process.cwd(),
-    "public",
-    "models",
-    name,
-    "model.json"
-  );
-  return await tf.loadGraphModel(`file://${modelPath}`);
+  const modelUrl = `${process.env.NUXT_URL}/models/${name}/model.json`;
+  return await tf.loadGraphModel(modelUrl);
 }
 
 export async function predictAction(
