@@ -1,4 +1,4 @@
-FROM node:22-slim AS builder
+FROM node:25-slim AS builder
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ RUN npm ci || (cat /root/.npm/_logs/* && false)
 RUN npm ci && npm run db:generate && npm run build
 
 
-FROM node:22-slim AS app-runner
+FROM node:25-slim AS app-runner
 
 WORKDIR /app
 
@@ -37,7 +37,7 @@ EXPOSE 3000
 CMD ["node", ".output/server/index.mjs"]
 
 
-FROM node:22-slim AS migrate-runner
+FROM node:25-slim AS migrate-runner
 
 WORKDIR /app
 
